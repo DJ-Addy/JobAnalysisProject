@@ -75,7 +75,7 @@ def main():
             if 'driver' in locals():
                 driver.quit()
         '''
-        """
+        #"""
         driver = None
         try:
             # Load environment variables
@@ -144,7 +144,7 @@ def main():
             # Close the driver
             if 'driver' in locals():
                 driver.quit()
-        """
+        
         upload_csv_to_drive("storage/jobs.csv", 'linkedin_jobs_indeed_jobs_union_for_janitor_il.csv')
 
 
