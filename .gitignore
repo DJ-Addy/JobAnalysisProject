@@ -27,6 +27,10 @@ yarn-error.log*
 # local env files
 .env*.local
 
+#Scraper Google Console Creds
+scraper/LnIWebScraper/client_secret*.json
+credentials.json
+
 # vercel
 .vercel
 
