@@ -10,7 +10,6 @@ from scrapper.linkedin_scraper import scrape_linkedin_job_data
 from storage.database import save_to_csv, upload_csv_to_drive
 from seleniumbase import Driver
 from dotenv import load_dotenv
-from googleapiclient.http import MediaFileUpload
 import os
 
 
