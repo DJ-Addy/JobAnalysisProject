@@ -25,6 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+C:/Users/Adam/Desktop/JobAnalysisProject/nextjs-fastapi/scraper/LnIWebScraper/.env
 scraper/LnIWebScraper/.env
 .env*.local
 
