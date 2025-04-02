@@ -1,10 +1,11 @@
+import traceback
+
 from fastapi import FastAPI, Request
 from google_auth_oauthlib.flow import Flow
 from starlette.responses import RedirectResponse
 from pydantic import BaseModel
 import os
-
-from scraper.LnIWebScraper.storage.database import upload_csv_to_drive
+from database_utils import upload_csv_to_drive
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
@@ -25,11 +26,20 @@ def upload_csv_to_drive_api(request: UploadRequest):
     drive_filename = request.drive_filename
 
     # Call your existing function
-    if os.path.exists(csv_path):
+    try:
+        if not os.path.exists(csv_path):
+            return {"status": "error", "message": f"File not found: {csv_path}"}
+
         upload_csv_to_drive(csv_path, drive_filename)
-        return {"status": "success", "message": f"Uploaded {csv_path} to Drive as '{drive_filename}'"}
-    else:
-        return {"status": "error", "message": f"CSV file not found at: {csv_path}"}
+        return {"status": "success", "message": "Uploaded successfully!"}
+
+    except Exception as e:
+        # Return the error message
+        return {
+            "status": "error",
+            "message": f"Internal error: {e}",
+            "trace": traceback.format_exc()
+        }
 
 
 

@@ -27,6 +27,8 @@ yarn-error.log*
 # local env files
 C:/Users/Adam/Desktop/JobAnalysisProject/nextjs-fastapi/scraper/LnIWebScraper/.env
 scraper/LnIWebScraper/.env
+nextjs-fastapi/scraper/LnIWebScraper/aqueous-botany-455604-q6-ec918345f930.json
+C:/Users/Adam/Desktop/JobAnalysisProject/nextjs-fastapi/scraper/LnIWebScraper/aqueous-botany-455604-q6-ec918345f930.json
 .env*.local
 
 #Scraper Google Console Creds

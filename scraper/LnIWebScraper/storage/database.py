@@ -7,7 +7,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 from googleapiclient.http import MediaFileUpload
-
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
 TOKEN_PATH = 'token.json'
 CLIENT_SECRET = 'client_secret_151474916753-lfmqqlgr78kdnn4vp912iivh58p6rt67.apps.googleusercontent.com.json'
@@ -46,35 +45,4 @@ def save_to_csv(df, output_path):
         return False
 
 
-
-def upload_csv_to_drive(csv_path, drive_filename):
-    creds = None
-
-    # Load existing credentials if they exist
-    if os.path.exists(TOKEN_PATH):
-        creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
-
-    # Authenticate and refresh if necessary
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open(TOKEN_PATH, 'w') as token:
-            token.write(creds.to_json())
-
-    # Build the Drive API client
-    drive_service = build('drive', 'v3', credentials=creds)
-
-    # Upload the file
-    file_metadata = {'name': drive_filename}
-    media = MediaFileUpload(csv_path, mimetype='text/csv')
-    response = drive_service.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields='id'
-    ).execute()
-
-    print(f"Successfully uploaded '{drive_filename}' to Google Drive (File ID: {response.get('id')})")
 
