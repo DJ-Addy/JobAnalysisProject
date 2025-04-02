@@ -11,7 +11,21 @@ from storage.database import save_to_csv, upload_csv_to_drive
 from seleniumbase import Driver
 from dotenv import load_dotenv
 import os
+import requests
 
+
+API_ENDPOINT = "http://127.0.0.1:8000/upload-csv"
+
+def trigger_csv_upload():
+    data = {
+        "csv_path": "storage/jobs.csv",
+        "drive_filename": "linkedin_jobs_indeed_jobs_union_for_janitor_il.csv"
+    }
+    response = requests.post(API_ENDPOINT, json=data)
+    if response.status_code == 200:
+        print(response.json())
+    else:
+        print(f"Failed to upload CSV. Status code: {response.status_code}")
 
 def main():
         '''
@@ -75,6 +89,7 @@ def main():
                 driver.quit()
         '''
         #"""
+        '''
         driver = None
         try:
             # Load environment variables
@@ -143,12 +158,12 @@ def main():
             # Close the driver
             if 'driver' in locals():
                 driver.quit()
-        
-        upload_csv_to_drive("storage/jobs.csv", 'linkedin_jobs_indeed_jobs_union_for_janitor_il.csv')
+        '''
+        trigger_csv_upload()
 
 
 
 if __name__ == "__main__":
     schedule.every().day.at("10:30").do(main())
-
+#uvicorn api.index:app --host 0.0.0.0 --port 8000 --reload
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
