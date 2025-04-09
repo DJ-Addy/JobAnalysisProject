@@ -10,6 +10,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 from googleapiclient.http import MediaFileUpload
 
 
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets','https://www.googleapis.com/auth/drive']
+TOKEN_PATH = 'token.json'
+CLIENT_SECRET =r"C:\Users\Adam\Desktop\JobAnalysisProject\nextjs-fastapi\api\aqueous-botany-455604-q6-ec918345f930.json"
 def upload_csv_to_drive(csv_path, drive_filename):
     print("DEBUG: csv_path =", csv_path)
     print("DEBUG: drive_filename =", drive_filename)

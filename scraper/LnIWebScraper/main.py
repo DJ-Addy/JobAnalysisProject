@@ -12,7 +12,6 @@ from seleniumbase import Driver
 from dotenv import load_dotenv
 import os
 import requests
-from ..index.py import upload_csv_to_drive
 
 
 API_ENDPOINT = "http://127.0.0.1:8000/upload-csv"
@@ -20,15 +19,14 @@ API_ENDPOINT = "http://127.0.0.1:8000/upload-csv"
 
 def trigger_csv_upload():
     data = {
-        "csv_path": "scraper/LnIWebScraper/storage/jobs.csv",
+        "csv_path": r"C:\Users\Adam\Desktop\JobAnalysisProject\nextjs-fastapi\scraper\LnIWebScraper\storage\jobs.csv",
         "drive_filename": "linkedin_jobs_indeed_jobs_union_for_janitor_il"
     }
-    upload_csv_to_drive(
-        csv_path="scraper/LnIWebScraper/storage/jobs.csv",
-        drive_filename="linkedin_jobs_indeed_jobs_union_for_janitor_il"
-    )
+    response = requests.post(API_ENDPOINT, json=data)
     if response.status_code == 200:
-        print(response.json())
+        print("Success:", response.json())
+    else:
+        print("Error:", response.text)
 
 
 def main():
