@@ -12,6 +12,7 @@ from seleniumbase import Driver
 from dotenv import load_dotenv
 import os
 import requests
+from ..index.py import upload_csv_to_drive
 
 
 API_ENDPOINT = "http://127.0.0.1:8000/upload-csv"
@@ -22,19 +23,12 @@ def trigger_csv_upload():
         "csv_path": "scraper/LnIWebScraper/storage/jobs.csv",
         "drive_filename": "linkedin_jobs_indeed_jobs_union_for_janitor_il"
     }
-
-    try:
-        response = requests.post(API_ENDPOINT, json=data, timeout=10)
-        if response.status_code == 200:
-            print(response.json())
-        else:
-            print(f"Failed to upload CSV. Status code: {response.status_code}")
-            print(f"Response: {response.text}")
-    except requests.exceptions.ConnectionError:
-        print(f"Connection error: Could not connect to {API_ENDPOINT}")
-        print("Make sure the FastAPI server is running (uvicorn api.index:app --host 0.0.0.0 --port 8000)")
-    except Exception as e:
-        print(f"Error trying to upload CSV: {e}")
+    upload_csv_to_drive(
+        csv_path="scraper/LnIWebScraper/storage/jobs.csv",
+        drive_filename="linkedin_jobs_indeed_jobs_union_for_janitor_il"
+    )
+    if response.status_code == 200:
+        print(response.json())
 
 
 def main():
@@ -176,8 +170,9 @@ def main():
 if __name__ == "__main__":
     #schedule.every().day.at("10:30").do(main())
     #main()
-    test_upload()
+    trigger_csv_upload()
 #uvicorn api.index:app --host 0.0.0.0 --port 8000 --reload
+#python -m uvicorn api.index:app --host 0.0.0.0 --port 8000 --reload
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 # Test with curl from command line
 # curl -X POST -H "Content-Type: application/json" -d '{"csv_path":"nextjs-fastapi/scraper/LnIWebScraper/storage/jobs.csv","drive_filename":"test.csv"}' http://127.0.0.1:8000/upload-csv
